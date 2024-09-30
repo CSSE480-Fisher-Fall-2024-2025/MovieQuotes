@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moviequotes/components/movie_quote_row.dart';
 import 'package:moviequotes/models/movie_quote.dart';
+import 'package:moviequotes/pages/movie_quote_detail_page.dart';
 
 class MovieQuotesListPage extends StatefulWidget {
   const MovieQuotesListPage({super.key});
@@ -53,7 +54,13 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
             .map((mq) => MovieQuoteRow(
                   movieQuote: mq,
                   onClick: () {
-                    print("You clicked on $mq");
+                    // print("You clicked on $mq");
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            MovieQuoteDetailPage(movieQuote: mq),
+                      ),
+                    );
                   },
                 ))
             .toList(),

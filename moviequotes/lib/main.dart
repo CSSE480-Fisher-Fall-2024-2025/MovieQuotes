@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:moviequotes/models/movie_quote.dart';
+import 'package:moviequotes/pages/movie_quote_detail_page.dart';
 import 'package:moviequotes/pages/movie_quotes_list_page.dart';
 
 void main() {
@@ -18,6 +20,13 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const MovieQuotesListPage(),
+      // home: MovieQuoteDetailPage(
+      //   movieQuote: MovieQuote(
+      //     quote:
+      //         "Hello. My name is Inigo Montoya. You killed my father. Prepare to die.",
+      //     movie: "The Princess Bride",
+      //   ),
+      // ),
     );
   }
 }

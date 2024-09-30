@@ -14,8 +14,17 @@ class MovieQuoteRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(movieQuote.quote),
-      subtitle: Text(movieQuote.movie),
+      onTap: onClick,
+      leading: const Icon(Icons.movie),
+      title: Text(
+        movieQuote.quote,
+        overflow: TextOverflow.ellipsis,
+      ),
+      subtitle: Text(
+        movieQuote.movie,
+        overflow: TextOverflow.ellipsis,
+      ),
+      trailing: const Icon(Icons.chevron_right),
     );
   }
 }
