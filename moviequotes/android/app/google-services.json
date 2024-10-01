@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "330903872710",
+    "project_id": "fisherds-moviequotes-2024",
+    "storage_bucket": "fisherds-moviequotes-2024.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:330903872710:android:0a985680ddc7e6e28b23c7",
+        "android_client_info": {
+          "package_name": "edu.rosehulman.fisherds.moviequotes2024"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-i-WKsFmRDr14qL9fHRRIE8PbTppqjfc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:330903872710:android:4a3367079d9747878b23c7",
+        "android_client_info": {
+          "package_name": "edu.rosehulman.fisherds.mq24"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-i-WKsFmRDr14qL9fHRRIE8PbTppqjfc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
