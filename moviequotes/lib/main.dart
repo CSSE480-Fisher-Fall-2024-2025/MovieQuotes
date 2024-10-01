@@ -25,14 +25,14 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: const MovieQuotesListPage(),
-      // home: MovieQuoteDetailPage(
-      //   movieQuote: MovieQuote(
-      //     quote:
-      //         "Hello. My name is Inigo Montoya. You killed my father. Prepare to die.",
-      //     movie: "The Princess Bride",
-      //   ),
-      // ),
+      // home: const MovieQuotesListPage(),
+      home: MovieQuoteDetailPage(
+        movieQuote: MovieQuote(
+          quote:
+              "Hello. My name is Inigo Montoya. You killed my father. Prepare to die.",
+          movie: "The Princess Bride",
+        ),
+      ),
     );
   }
 }

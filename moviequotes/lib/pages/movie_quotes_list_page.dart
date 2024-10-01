@@ -119,7 +119,6 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
           ),
           TextButton(
             onPressed: () {
-              // TODO: Use the Text Fields to add this quote!
               var newMq = MovieQuote(
                 quote: quoteTextEditingController.text,
                 movie: movieTextEditingController.text,
