@@ -14,7 +14,9 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
   // List<MovieQuote> movieQuotes = [];
   var movieQuotes = <MovieQuote>[];
 
-  // On Tuesday start here with two TextEditingController!!!
+  // On Tuesday start here with two TextEditingControllers!!!
+  final quoteTextEditingController = TextEditingController();
+  final movieTextEditingController = TextEditingController();
 
   @override
   void initState() {
@@ -83,13 +85,31 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
   }
 
   void showCreateQuoteDialog() {
-    print("You clicked the FAB");
-    // TODO: Show a dialog to add a quote!
+    quoteTextEditingController.text = "";
+    movieTextEditingController.text = "";
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text("Create a Quote"),
-        content: null,
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: quoteTextEditingController,
+              decoration: const InputDecoration(
+                labelText: "Quote",
+                border: UnderlineInputBorder(),
+              ),
+            ),
+            TextField(
+              controller: movieTextEditingController,
+              decoration: const InputDecoration(
+                labelText: "Movie",
+                border: UnderlineInputBorder(),
+              ),
+            ),
+          ],
+        ),
         actions: [
           TextButton(
             onPressed: () {
@@ -100,6 +120,13 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
           TextButton(
             onPressed: () {
               // TODO: Use the Text Fields to add this quote!
+              var newMq = MovieQuote(
+                quote: quoteTextEditingController.text,
+                movie: movieTextEditingController.text,
+              );
+              setState(() {
+                movieQuotes.add(newMq);
+              });
               Navigator.pop(context);
             },
             child: const Text("Submit"),
