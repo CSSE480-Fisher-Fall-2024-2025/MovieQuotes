@@ -14,6 +14,8 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
   // List<MovieQuote> movieQuotes = [];
   var movieQuotes = <MovieQuote>[];
 
+  // On Tuesday start here with two TextEditingController!!!
+
   @override
   void initState() {
     super.initState();
@@ -72,10 +74,37 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          print("You clicked the FAB");
+          showCreateQuoteDialog();
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
+      ),
+    );
+  }
+
+  void showCreateQuoteDialog() {
+    print("You clicked the FAB");
+    // TODO: Show a dialog to add a quote!
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Create a Quote"),
+        content: null,
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(); // New so must be better?
+            },
+            child: const Text("Cancel"),
+          ),
+          TextButton(
+            onPressed: () {
+              // TODO: Use the Text Fields to add this quote!
+              Navigator.pop(context);
+            },
+            child: const Text("Submit"),
+          ),
+        ],
       ),
     );
   }
