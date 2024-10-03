@@ -58,14 +58,14 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
         children: movieQuotes
             .map((mq) => MovieQuoteRow(
                   movieQuote: mq,
-                  onClick: () {
-                    // print("You clicked on $mq");
-                    Navigator.of(context).push(
+                  onClick: () async {
+                    await Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) =>
                             MovieQuoteDetailPage(movieQuote: mq),
                       ),
                     );
+                    setState(() {});
                   },
                 ))
             .toList(),
