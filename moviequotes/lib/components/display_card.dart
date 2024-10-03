@@ -18,7 +18,10 @@ class DisplayCard extends StatelessWidget {
       children: [
         Text(
           labelText,
-          style: const TextStyle(fontSize: 30.0),
+          style: const TextStyle(
+            fontSize: 30.0,
+            fontFamily: "Rowdies",
+          ),
         ),
         Card(
           child: Container(
