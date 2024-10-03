@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moviequotes/components/display_card.dart';
+import 'package:moviequotes/components/movie_quote_form_dialog.dart';
 import 'package:moviequotes/models/movie_quote.dart';
 
 class MovieQuoteDetailPage extends StatefulWidget {
@@ -14,12 +15,38 @@ class MovieQuoteDetailPage extends StatefulWidget {
 }
 
 class _MovieQuoteDetailPageState extends State<MovieQuoteDetailPage> {
+  final quoteTextEditingController = TextEditingController();
+  final movieTextEditingController = TextEditingController();
+
+  @override
+  void dispose() {
+    quoteTextEditingController.dispose();
+    movieTextEditingController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Movie Quote"),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        actions: [
+          IconButton(
+            onPressed: () {
+              showEditQuoteDialog();
+            },
+            tooltip: "Edit",
+            icon: const Icon(Icons.edit),
+          ),
+          IconButton(
+            onPressed: () {
+              print("You pressed the delete button");
+            },
+            tooltip: "Delete",
+            icon: const Icon(Icons.delete),
+          ),
+        ],
       ),
       backgroundColor: Colors.grey,
       // body: Center(
@@ -43,6 +70,24 @@ class _MovieQuoteDetailPageState extends State<MovieQuoteDetailPage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void showEditQuoteDialog() {
+    quoteTextEditingController.text = widget.movieQuote.quote;
+    movieTextEditingController.text = widget.movieQuote.movie;
+    showDialog(
+      context: context,
+      builder: (context) => MovieQuoteFormDialog(
+        quoteTextEditingController: quoteTextEditingController,
+        movieTextEditingController: movieTextEditingController,
+        positiveAction: () {
+          setState(() {
+            widget.movieQuote.quote = quoteTextEditingController.text;
+            widget.movieQuote.movie = movieTextEditingController.text;
+          });
+        },
       ),
     );
   }

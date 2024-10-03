@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moviequotes/components/movie_quote_form_dialog.dart';
 import 'package:moviequotes/components/movie_quote_row.dart';
 import 'package:moviequotes/models/movie_quote.dart';
 import 'package:moviequotes/pages/movie_quote_detail_page.dart';
@@ -14,7 +15,6 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
   // List<MovieQuote> movieQuotes = [];
   var movieQuotes = <MovieQuote>[];
 
-  // On Tuesday start here with two TextEditingControllers!!!
   final quoteTextEditingController = TextEditingController();
   final movieTextEditingController = TextEditingController();
 
@@ -42,7 +42,8 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    quoteTextEditingController.dispose();
+    movieTextEditingController.dispose();
     super.dispose();
   }
 
@@ -89,48 +90,18 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
     movieTextEditingController.text = "";
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Create a Quote"),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: quoteTextEditingController,
-              decoration: const InputDecoration(
-                labelText: "Quote",
-                border: UnderlineInputBorder(),
-              ),
-            ),
-            TextField(
-              controller: movieTextEditingController,
-              decoration: const InputDecoration(
-                labelText: "Movie",
-                border: UnderlineInputBorder(),
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(); // New so must be better?
-            },
-            child: const Text("Cancel"),
-          ),
-          TextButton(
-            onPressed: () {
-              var newMq = MovieQuote(
-                quote: quoteTextEditingController.text,
-                movie: movieTextEditingController.text,
-              );
-              setState(() {
-                movieQuotes.add(newMq);
-              });
-              Navigator.pop(context);
-            },
-            child: const Text("Submit"),
-          ),
-        ],
+      builder: (context) => MovieQuoteFormDialog(
+        quoteTextEditingController: quoteTextEditingController,
+        movieTextEditingController: movieTextEditingController,
+        positiveAction: () {
+          var newMq = MovieQuote(
+            quote: quoteTextEditingController.text,
+            movie: movieTextEditingController.text,
+          );
+          setState(() {
+            movieQuotes.add(newMq);
+          });
+        },
       ),
     );
   }
