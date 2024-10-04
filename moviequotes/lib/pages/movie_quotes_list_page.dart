@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:moviequotes/components/movie_quote_form_dialog.dart';
 import 'package:moviequotes/components/movie_quote_row.dart';
@@ -21,6 +22,18 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
   @override
   void initState() {
     super.initState();
+
+    // Spike test #2 - Pulling data from the cloud
+    FirebaseFirestore.instance
+        .collection("MovieQuotes")
+        .snapshots()
+        .listen((QuerySnapshot querySnapshot) {
+      for (final doc in querySnapshot.docs) {
+        print(doc.id);
+        print(doc.data());
+      }
+    });
+
     movieQuotes.add(
       MovieQuote(
         quote: "I'll be back!",
@@ -94,12 +107,18 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
         quoteTextEditingController: quoteTextEditingController,
         movieTextEditingController: movieTextEditingController,
         positiveAction: () {
-          var newMq = MovieQuote(
-            quote: quoteTextEditingController.text,
-            movie: movieTextEditingController.text,
-          );
-          setState(() {
-            movieQuotes.add(newMq);
+          // var newMq = MovieQuote(
+          //   quote: quoteTextEditingController.text,
+          //   movie: movieTextEditingController.text,
+          // );
+          // setState(() {
+          //   movieQuotes.add(newMq);
+          // });
+
+          // Spike test #1: Adding data
+          FirebaseFirestore.instance.collection("MovieQuotes").add({
+            "quote": quoteTextEditingController.text,
+            "movie": movieTextEditingController.text,
           });
         },
       ),
