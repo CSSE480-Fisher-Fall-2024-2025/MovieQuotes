@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:moviequotes/components/movie_quote_form_dialog.dart';
 import 'package:moviequotes/components/movie_quote_row.dart';
+import 'package:moviequotes/managers/movie_quotes_collection_manager.dart';
 import 'package:moviequotes/models/movie_quote.dart';
 import 'package:moviequotes/pages/movie_quote_detail_page.dart';
 
@@ -13,50 +16,55 @@ class MovieQuotesListPage extends StatefulWidget {
 }
 
 class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
-  // List<MovieQuote> movieQuotes = [];
-  var movieQuotes = <MovieQuote>[];
-
   final quoteTextEditingController = TextEditingController();
   final movieTextEditingController = TextEditingController();
+  StreamSubscription? movieQuotesSubscription;
 
   @override
   void initState() {
     super.initState();
 
     // Spike test #2 - Pulling data from the cloud
-    FirebaseFirestore.instance
-        .collection("MovieQuotes")
-        .snapshots()
-        .listen((QuerySnapshot querySnapshot) {
-      for (final doc in querySnapshot.docs) {
-        print(doc.id);
-        print(doc.data());
-      }
+    // FirebaseFirestore.instance
+    //     .collection("MovieQuotes")
+    //     .snapshots()
+    //     .listen((QuerySnapshot querySnapshot) {
+    //   for (final doc in querySnapshot.docs) {
+    //     print(doc.id);
+    //     print(doc.data());
+    //   }
+    // });
+
+    movieQuotesSubscription =
+        MovieQuotesCollectionManager.instance.startListening(() {
+      setState(() {});
     });
 
-    movieQuotes.add(
-      MovieQuote(
-        quote: "I'll be back!",
-        movie: "The Terminator",
-      ),
-    );
-    movieQuotes.add(
-      MovieQuote(
-        quote: "Everything is Awesome",
-        movie: "The Lego Movie",
-      ),
-    );
-    movieQuotes.add(MovieQuote(
-      quote:
-          "Hello. My name is Inigo Montoya. You killed my father. Prepare to die.",
-      movie: "The Princess Bride",
-    ));
+    // MovieQuotesCollectionManager.instance.latestMovieQuotes.add(
+    //   MovieQuote(
+    //     quote: "I'll be back!",
+    //     movie: "The Terminator",
+    //   ),
+    // );
+    // MovieQuotesCollectionManager.instance.latestMovieQuotes.add(
+    //   MovieQuote(
+    //     quote: "Everything is Awesome",
+    //     movie: "The Lego Movie",
+    //   ),
+    // );
+    // MovieQuotesCollectionManager.instance.latestMovieQuotes.add(MovieQuote(
+    //   quote:
+    //       "Hello. My name is Inigo Montoya. You killed my father. Prepare to die.",
+    //   movie: "The Princess Bride",
+    // ));
   }
 
   @override
   void dispose() {
     quoteTextEditingController.dispose();
     movieTextEditingController.dispose();
+    MovieQuotesCollectionManager.instance
+        .stopListening(movieQuotesSubscription);
     super.dispose();
   }
 
@@ -68,7 +76,7 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
         title: const Text("Movie Quotes"),
       ),
       body: ListView(
-        children: movieQuotes
+        children: MovieQuotesCollectionManager.instance.latestMovieQuotes
             .map((mq) => MovieQuoteRow(
                   movieQuote: mq,
                   onClick: () async {
