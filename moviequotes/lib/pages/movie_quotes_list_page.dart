@@ -77,14 +77,22 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
         children: MovieQuotesCollectionManager.instance.latestMovieQuotes
             .map((mq) => MovieQuoteRow(
                   movieQuote: mq,
-                  onClick: () async {
-                    await Navigator.of(context).push(
+                  // onClick: () async {
+                  //   await Navigator.of(context).push(
+                  //     MaterialPageRoute(
+                  //       builder: (context) =>
+                  //           MovieQuoteDetailPage(movieQuote: mq),
+                  //     ),
+                  //   );
+                  //   setState(() {});
+                  // }
+                  onClick: () {
+                    Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) =>
-                            MovieQuoteDetailPage(movieQuote: mq),
+                            MovieQuoteDetailPage(documentId: mq.documentId!),
                       ),
                     );
-                    setState(() {});
                   },
                 ))
             .toList(),

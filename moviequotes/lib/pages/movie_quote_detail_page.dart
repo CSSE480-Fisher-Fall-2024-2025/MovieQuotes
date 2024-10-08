@@ -1,13 +1,19 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:moviequotes/components/display_card.dart';
 import 'package:moviequotes/components/movie_quote_form_dialog.dart';
+import 'package:moviequotes/managers/movie_quote_document_manager.dart';
 import 'package:moviequotes/models/movie_quote.dart';
 
 class MovieQuoteDetailPage extends StatefulWidget {
-  final MovieQuote movieQuote;
+  // final MovieQuote movieQuote;
+  final String documentId;
+
   const MovieQuoteDetailPage({
     super.key,
-    required this.movieQuote,
+    // required this.movieQuote,
+    required this.documentId,
   });
 
   @override
@@ -17,6 +23,19 @@ class MovieQuoteDetailPage extends StatefulWidget {
 class _MovieQuoteDetailPageState extends State<MovieQuoteDetailPage> {
   final quoteTextEditingController = TextEditingController();
   final movieTextEditingController = TextEditingController();
+  StreamSubscription? movieQuoteSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    movieQuoteSubscription = MovieQuoteDocumentManager.instance.startListening(
+      documentId: widget.documentId,
+      observer: () {
+        print("Received the document");
+        setState(() {});
+      },
+    );
+  }
 
   @override
   void dispose() {
@@ -66,7 +85,8 @@ class _MovieQuoteDetailPageState extends State<MovieQuoteDetailPage> {
             DisplayCard(
               labelText: "Quote:",
               iconData: Icons.format_quote_outlined,
-              displayText: widget.movieQuote.quote,
+              // displayText: widget.movieQuote.quote,
+              displayText: MovieQuoteDocumentManager.instance.quote,
             ),
             const SizedBox(
               height: 40.0,
@@ -74,7 +94,8 @@ class _MovieQuoteDetailPageState extends State<MovieQuoteDetailPage> {
             DisplayCard(
               labelText: "Movie:",
               iconData: Icons.movie_filter_outlined,
-              displayText: widget.movieQuote.movie,
+              // displayText: widget.movieQuote.movie,
+              displayText: MovieQuoteDocumentManager.instance.movie,
             ),
           ],
         ),
@@ -83,18 +104,20 @@ class _MovieQuoteDetailPageState extends State<MovieQuoteDetailPage> {
   }
 
   void showEditQuoteDialog() {
-    quoteTextEditingController.text = widget.movieQuote.quote;
-    movieTextEditingController.text = widget.movieQuote.movie;
+    quoteTextEditingController.text = MovieQuoteDocumentManager.instance.quote;
+    movieTextEditingController.text = MovieQuoteDocumentManager.instance.movie;
     showDialog(
       context: context,
       builder: (context) => MovieQuoteFormDialog(
         quoteTextEditingController: quoteTextEditingController,
         movieTextEditingController: movieTextEditingController,
         positiveAction: () {
-          setState(() {
-            widget.movieQuote.quote = quoteTextEditingController.text;
-            widget.movieQuote.movie = movieTextEditingController.text;
-          });
+          // setState(() {
+          // widget.movieQuote.quote = quoteTextEditingController.text;
+          // widget.movieQuote.movie = movieTextEditingController.text;
+          // });
+
+          // TODO: Visit when we have the update method done.
         },
       ),
     );
