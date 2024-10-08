@@ -1,11 +1,9 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:moviequotes/components/movie_quote_form_dialog.dart';
 import 'package:moviequotes/components/movie_quote_row.dart';
 import 'package:moviequotes/managers/movie_quotes_collection_manager.dart';
-import 'package:moviequotes/models/movie_quote.dart';
 import 'package:moviequotes/pages/movie_quote_detail_page.dart';
 
 class MovieQuotesListPage extends StatefulWidget {
@@ -124,10 +122,14 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
           // });
 
           // Spike test #1: Adding data
-          FirebaseFirestore.instance.collection("MovieQuotes").add({
-            "quote": quoteTextEditingController.text,
-            "movie": movieTextEditingController.text,
-          });
+          // FirebaseFirestore.instance.collection("MovieQuotes").add({
+          //   "quote": quoteTextEditingController.text,
+          //   "movie": movieTextEditingController.text,
+          // });
+          MovieQuotesCollectionManager.instance.add(
+            quote: quoteTextEditingController.text,
+            movie: movieTextEditingController.text,
+          );
         },
       ),
     );

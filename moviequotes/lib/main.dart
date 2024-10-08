@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:moviequotes/models/movie_quote.dart';
-import 'package:moviequotes/pages/movie_quote_detail_page.dart';
 import 'package:moviequotes/pages/movie_quotes_list_page.dart';
 
 import 'package:firebase_core/firebase_core.dart';

@@ -29,5 +29,18 @@ class MovieQuotesCollectionManager {
     subscription?.cancel();
   }
 
-  // TODO: Tomorrow start with add (including lastTouched)
+  Future<void> add({
+    required String quote,
+    required String movie,
+  }) {
+    return _ref.add({
+      kMovieQuoteQuote: quote,
+      kMovieQuoteMovie: movie,
+      kMovieQuoteLastTouched: Timestamp.now(),
+    }).then((DocumentReference docRef) {
+      print("The add is finished, the doc id was ${docRef.id}");
+    }).catchError((error) {
+      print("There was an error: $error");
+    });
+  }
 }
