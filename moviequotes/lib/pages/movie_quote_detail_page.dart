@@ -117,7 +117,10 @@ class _MovieQuoteDetailPageState extends State<MovieQuoteDetailPage> {
           // widget.movieQuote.movie = movieTextEditingController.text;
           // });
 
-          // TODO: Visit when we have the update method done.
+          MovieQuoteDocumentManager.instance.update(
+            quote: quoteTextEditingController.text,
+            movie: movieTextEditingController.text,
+          );
         },
       ),
     );

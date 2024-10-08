@@ -30,29 +30,23 @@ class MovieQuoteDocumentManager {
     subscription?.cancel();
   }
 
-  void update() {
-    // TODO: Do this later, similar to add.
-  }
-
   void delete() {
     // TODO: Do this later.  Delete the one you most recently got.
   }
 
   // Comment out add, since update will have similarities.
-  // Future<void> add({
-  //   required String quote,
-  //   required String movie,
-  // }) {
-  //   return _ref.add({
-  //     kMovieQuoteQuote: quote,
-  //     kMovieQuoteMovie: movie,
-  //     kMovieQuoteLastTouched: Timestamp.now(),
-  //   }).then((DocumentReference docRef) {
-  //     print("The add is finished, the doc id was ${docRef.id}");
-  //   }).catchError((error) {
-  //     print("There was an error: $error");
-  //   });
-  // }
+  Future<void> update({
+    required String quote,
+    required String movie,
+  }) {
+    return _ref.doc(latestMovieQuote!.documentId!).update({
+      kMovieQuoteQuote: quote,
+      kMovieQuoteMovie: movie,
+      kMovieQuoteLastTouched: Timestamp.now(),
+    }).catchError((error) {
+      print("There was an error: $error");
+    });
+  }
 
   String get quote => latestMovieQuote?.quote ?? "";
   String get movie => latestMovieQuote?.movie ?? "";
