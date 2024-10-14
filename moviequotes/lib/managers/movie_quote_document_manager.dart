@@ -31,6 +31,7 @@ class MovieQuoteDocumentManager {
   }
 
   void delete() {
+    // After Fall Break start here (Oct 14th, 2024)
     // TODO: Do this later.  Delete the one you most recently got.
   }
 
