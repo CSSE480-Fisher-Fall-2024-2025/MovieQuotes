@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:moviequotes/components/display_card.dart';
 import 'package:moviequotes/components/movie_quote_form_dialog.dart';
 import 'package:moviequotes/managers/movie_quote_document_manager.dart';
+import 'package:moviequotes/managers/movie_quotes_collection_manager.dart';
 import 'package:moviequotes/models/movie_quote.dart';
 
 class MovieQuoteDetailPage extends StatefulWidget {
@@ -61,10 +62,23 @@ class _MovieQuoteDetailPageState extends State<MovieQuoteDetailPage> {
           IconButton(
             onPressed: () {
               // print("You pressed the delete button");
-
+              MovieQuote deletedMq =
+                  MovieQuoteDocumentManager.instance.latestMovieQuote!;
+              MovieQuoteDocumentManager.instance.delete();
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text("Quote deleted"),
+                SnackBar(
+                  content: const Text("Quote deleted"),
+                  action: SnackBarAction(
+                    label: "Undo",
+                    onPressed: () {
+                      // MovieQuotesCollectionManager.instance.add(
+                      //   quote: deletedMq.quote,
+                      //   movie: deletedMq.movie,
+                      // );
+
+                      MovieQuoteDocumentManager.instance.restore(deletedMq);
+                    },
+                  ),
                 ),
               );
 

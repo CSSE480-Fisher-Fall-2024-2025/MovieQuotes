@@ -30,10 +30,7 @@ class MovieQuoteDocumentManager {
     subscription?.cancel();
   }
 
-  void delete() {
-    // After Fall Break start here (Oct 14th, 2024)
-    // TODO: Do this later.  Delete the one you most recently got.
-  }
+  Future<void> delete() => _ref.doc(latestMovieQuote!.documentId!).delete();
 
   // Comment out add, since update will have similarities.
   Future<void> update({
@@ -44,6 +41,16 @@ class MovieQuoteDocumentManager {
       kMovieQuoteQuote: quote,
       kMovieQuoteMovie: movie,
       kMovieQuoteLastTouched: Timestamp.now(),
+    }).catchError((error) {
+      print("There was an error: $error");
+    });
+  }
+
+  void restore(MovieQuote mqToRestore) {
+    _ref.doc(mqToRestore.documentId!).set({
+      kMovieQuoteQuote: mqToRestore.quote,
+      kMovieQuoteMovie: mqToRestore.movie,
+      kMovieQuoteLastTouched: mqToRestore.lastTouched,
     }).catchError((error) {
       print("There was an error: $error");
     });
