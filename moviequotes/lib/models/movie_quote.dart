@@ -29,7 +29,6 @@ class MovieQuote {
               doc, kMovieQuoteLastTouched),
         );
 
-  // The oppostie direction (needed MUCH later)
   Map<String, Object?> toJsonMap() => {
         kMovieQuoteQuote: quote,
         kMovieQuoteMovie: movie,

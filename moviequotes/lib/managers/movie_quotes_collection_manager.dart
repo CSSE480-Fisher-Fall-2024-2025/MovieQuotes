@@ -43,4 +43,11 @@ class MovieQuotesCollectionManager {
       print("There was an error: $error");
     });
   }
+
+  Query<MovieQuote> get allMovieQuotesQuery =>
+      _ref.orderBy(kMovieQuoteLastTouched, descending: true).withConverter(
+            fromFirestore: (documentSnapshot, _) =>
+                MovieQuote.from(documentSnapshot),
+            toFirestore: (movieQuote, _) => movieQuote.toJsonMap(),
+          );
 }

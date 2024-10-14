@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:moviequotes/components/movie_quote_form_dialog.dart';
 import 'package:moviequotes/components/movie_quote_row.dart';
 import 'package:moviequotes/managers/movie_quotes_collection_manager.dart';
+import 'package:moviequotes/models/movie_quote.dart';
 import 'package:moviequotes/pages/movie_quote_detail_page.dart';
 
 class MovieQuotesListPage extends StatefulWidget {
@@ -73,34 +75,22 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text("Movie Quotes"),
       ),
-      body: ListView(
-        children: MovieQuotesCollectionManager.instance.latestMovieQuotes
-            .map((mq) => MovieQuoteRow(
-                  movieQuote: mq,
-                  // onClick: () async {
-                  //   await Navigator.of(context).push(
-                  //     MaterialPageRoute(
-                  //       builder: (context) =>
-                  //           MovieQuoteDetailPage(movieQuote: mq),
-                  //     ),
-                  //   );
-                  //   setState(() {});
-                  // }
-                  onClick: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            MovieQuoteDetailPage(documentId: mq.documentId!),
-                      ),
-                    );
-                  },
-                ))
-            .toList(),
-
-        // children: List<Widget>.filled(
-        //   60,
-        //   const Text("I'm a list item!"),
-        // ),
+      body: FirestoreListView(
+        query: MovieQuotesCollectionManager.instance.allMovieQuotesQuery,
+        itemBuilder: (context, snapshot) {
+          final MovieQuote mq = snapshot.data();
+          return MovieQuoteRow(
+            movieQuote: mq,
+            onClick: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) =>
+                      MovieQuoteDetailPage(documentId: mq.documentId!),
+                ),
+              );
+            },
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
