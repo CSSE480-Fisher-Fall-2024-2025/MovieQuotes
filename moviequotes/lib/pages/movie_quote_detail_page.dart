@@ -32,7 +32,6 @@ class _MovieQuoteDetailPageState extends State<MovieQuoteDetailPage> {
     movieQuoteSubscription = MovieQuoteDocumentManager.instance.startListening(
       documentId: widget.documentId,
       observer: () {
-        print("Received the document");
         setState(() {});
       },
     );
@@ -47,47 +46,52 @@ class _MovieQuoteDetailPageState extends State<MovieQuoteDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    var actions = <Widget>[];
+
+    if (MovieQuoteDocumentManager.instance.latestMovieQuote != null) {
+      actions = <Widget>[
+        IconButton(
+          onPressed: () {
+            showEditQuoteDialog();
+          },
+          tooltip: "Edit",
+          icon: const Icon(Icons.edit),
+        ),
+        IconButton(
+          onPressed: () {
+            // print("You pressed the delete button");
+            MovieQuote deletedMq =
+                MovieQuoteDocumentManager.instance.latestMovieQuote!;
+            MovieQuoteDocumentManager.instance.delete();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text("Quote deleted"),
+                action: SnackBarAction(
+                  label: "Undo",
+                  onPressed: () {
+                    // MovieQuotesCollectionManager.instance.add(
+                    //   quote: deletedMq.quote,
+                    //   movie: deletedMq.movie,
+                    // );
+
+                    MovieQuoteDocumentManager.instance.restore(deletedMq);
+                  },
+                ),
+              ),
+            );
+
+            Navigator.of(context).pop();
+          },
+          tooltip: "Delete",
+          icon: const Icon(Icons.delete),
+        ),
+      ];
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text("Movie Quote"),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        actions: [
-          IconButton(
-            onPressed: () {
-              showEditQuoteDialog();
-            },
-            tooltip: "Edit",
-            icon: const Icon(Icons.edit),
-          ),
-          IconButton(
-            onPressed: () {
-              // print("You pressed the delete button");
-              MovieQuote deletedMq =
-                  MovieQuoteDocumentManager.instance.latestMovieQuote!;
-              MovieQuoteDocumentManager.instance.delete();
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: const Text("Quote deleted"),
-                  action: SnackBarAction(
-                    label: "Undo",
-                    onPressed: () {
-                      // MovieQuotesCollectionManager.instance.add(
-                      //   quote: deletedMq.quote,
-                      //   movie: deletedMq.movie,
-                      // );
-
-                      MovieQuoteDocumentManager.instance.restore(deletedMq);
-                    },
-                  ),
-                ),
-              );
-
-              Navigator.of(context).pop();
-            },
-            tooltip: "Delete",
-            icon: const Icon(Icons.delete),
-          ),
-        ],
+        actions: actions,
       ),
       backgroundColor: Colors.grey,
       // body: Center(
