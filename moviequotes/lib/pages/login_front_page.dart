@@ -31,10 +31,35 @@ class _LoginFrontPageState extends State<LoginFrontPage> {
             ),
           ),
           SquareButton(
-              displayText: "Log in",
-              onPressCallback: () {
-                print("Login Page: pressed button");
-              })
+            displayText: "Log in",
+            onPressCallback: () {
+              print("TODO: Show the Log in existing user page!");
+            },
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text("Don't have an account yet?"),
+              TextButton(
+                onPressed: () {
+                  print("TODO: Show the Create account page!");
+                },
+                child: const Text("Sign Up Here"),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 60.0,
+          ),
+          ElevatedButton(
+            onPressed: () {
+              print("TODO: Show the Firebase Auth UI");
+            },
+            child: const Text("Or sign in with Google"),
+          ),
+          const SizedBox(
+            height: 20.0,
+          ),
         ],
       ),
     );
