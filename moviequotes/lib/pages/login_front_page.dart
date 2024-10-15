@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:moviequotes/components/square_button.dart';
+import 'package:moviequotes/pages/email_password_auth_page.dart';
 
 class LoginFrontPage extends StatefulWidget {
   const LoginFrontPage({super.key});
@@ -33,7 +34,12 @@ class _LoginFrontPageState extends State<LoginFrontPage> {
           SquareButton(
             displayText: "Log in",
             onPressCallback: () {
-              print("TODO: Show the Log in existing user page!");
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) =>
+                      const EmailPasswordAuthPage(isNewUser: false),
+                ),
+              );
             },
           ),
           Row(
@@ -42,7 +48,12 @@ class _LoginFrontPageState extends State<LoginFrontPage> {
               const Text("Don't have an account yet?"),
               TextButton(
                 onPressed: () {
-                  print("TODO: Show the Create account page!");
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          const EmailPasswordAuthPage(isNewUser: true),
+                    ),
+                  );
                 },
                 child: const Text("Sign Up Here"),
               ),
