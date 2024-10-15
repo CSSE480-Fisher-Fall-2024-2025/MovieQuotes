@@ -18,7 +18,9 @@ class MovieQuotesListPage extends StatefulWidget {
 class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
   final quoteTextEditingController = TextEditingController();
   final movieTextEditingController = TextEditingController();
-  StreamSubscription? movieQuotesSubscription;
+
+  // Not needed if using Firebase UI Firestore
+  // StreamSubscription? movieQuotesSubscription;
 
   @override
   void initState() {
@@ -35,10 +37,11 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
     //   }
     // });
 
-    movieQuotesSubscription =
-        MovieQuotesCollectionManager.instance.startListening(() {
-      setState(() {});
-    });
+// Not needed if using Firebase UI Firestore
+    // movieQuotesSubscription =
+    //     MovieQuotesCollectionManager.instance.startListening(() {
+    //   setState(() {});
+    // });
 
     // MovieQuotesCollectionManager.instance.latestMovieQuotes.add(
     //   MovieQuote(
@@ -63,8 +66,9 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
   void dispose() {
     quoteTextEditingController.dispose();
     movieTextEditingController.dispose();
-    MovieQuotesCollectionManager.instance
-        .stopListening(movieQuotesSubscription);
+    // Not needed if using Firebase UI Firestore
+    // MovieQuotesCollectionManager.instance
+    //     .stopListening(movieQuotesSubscription);
     super.dispose();
   }
 

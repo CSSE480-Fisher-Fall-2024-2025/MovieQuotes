@@ -4,7 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:moviequotes/models/movie_quote.dart';
 
 class MovieQuotesCollectionManager {
-  var latestMovieQuotes = <MovieQuote>[];
+  // Not needed if using Firebase UI Firestore
+  // var latestMovieQuotes = <MovieQuote>[];
   final CollectionReference _ref;
 
   static final MovieQuotesCollectionManager instance =
@@ -14,20 +15,21 @@ class MovieQuotesCollectionManager {
       : _ref =
             FirebaseFirestore.instance.collection(kMovieQuotesCollectionPath);
 
-  StreamSubscription startListening(Function observer) => _ref
-          .orderBy(kMovieQuoteLastTouched, descending: true)
-          .snapshots()
-          .listen((QuerySnapshot querySnapshot) {
-        latestMovieQuotes =
-            querySnapshot.docs.map((doc) => MovieQuote.from(doc)).toList();
-        observer();
-      }, onError: (error) {
-        print("Error listening for Movie Quotes $error");
-      });
+// Not needed if using Firebase UI Firestore
+  // StreamSubscription startListening(Function observer) => _ref
+  //         .orderBy(kMovieQuoteLastTouched, descending: true)
+  //         .snapshots()
+  //         .listen((QuerySnapshot querySnapshot) {
+  //       latestMovieQuotes =
+  //           querySnapshot.docs.map((doc) => MovieQuote.from(doc)).toList();
+  //       observer();
+  //     }, onError: (error) {
+  //       print("Error listening for Movie Quotes $error");
+  //     });
 
-  void stopListening(StreamSubscription? subscription) {
-    subscription?.cancel();
-  }
+  // void stopListening(StreamSubscription? subscription) {
+  //   subscription?.cancel();
+  // }
 
   Future<void> add({
     required String quote,
