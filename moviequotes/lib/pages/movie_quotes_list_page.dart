@@ -4,8 +4,10 @@ import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:moviequotes/components/movie_quote_form_dialog.dart';
 import 'package:moviequotes/components/movie_quote_row.dart';
+import 'package:moviequotes/managers/auth_manager.dart';
 import 'package:moviequotes/managers/movie_quotes_collection_manager.dart';
 import 'package:moviequotes/models/movie_quote.dart';
+import 'package:moviequotes/pages/login_front_page.dart';
 import 'package:moviequotes/pages/movie_quote_detail_page.dart';
 
 class MovieQuotesListPage extends StatefulWidget {
@@ -74,10 +76,29 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
 
   @override
   Widget build(BuildContext context) {
+    var actions = <Widget>[];
+    if (!AuthManager.instance.isSignedin) {
+      actions = [
+        IconButton(
+          tooltip: "Log in",
+          onPressed: () async {
+            await Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const LoginFrontPage(),
+              ),
+            );
+            setState(() {});
+          },
+          icon: const Icon(Icons.login),
+        ),
+      ];
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text("Movie Quotes"),
+        actions: actions,
       ),
       body: FirestoreListView(
         query: MovieQuotesCollectionManager.instance.allMovieQuotesQuery,
