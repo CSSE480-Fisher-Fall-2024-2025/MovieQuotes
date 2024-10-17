@@ -41,6 +41,7 @@ dependencies:
   cloud_firestore: ^5.4.3
   firebase_storage: ^12.3.2
   firebase_ui_firestore: ^1.7.0
+  email_validator: ^3.0.0
 
 dev_dependencies:
   flutter_test:
