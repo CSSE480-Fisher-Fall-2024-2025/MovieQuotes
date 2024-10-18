@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:moviequotes/components/list_page_drawer.dart';
 import 'package:moviequotes/components/movie_quote_form_dialog.dart';
 import 'package:moviequotes/components/movie_quote_row.dart';
 import 'package:moviequotes/managers/auth_manager.dart';
@@ -117,6 +118,16 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
           );
         },
       ),
+      drawer: AuthManager.instance.isSignedin
+          ? ListPageDrawer(
+              showOnlyMineCallback: () {
+                print("TODO: Filter to show only my quotes");
+              },
+              showAllCallback: () {
+                print("TODO: Remove the filter. Show all quotes");
+              },
+            )
+          : null,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           if (AuthManager.instance.isSignedin) {
