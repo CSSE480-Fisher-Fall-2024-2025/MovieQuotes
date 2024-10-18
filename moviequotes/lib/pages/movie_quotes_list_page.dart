@@ -119,12 +119,49 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showCreateQuoteDialog();
+          if (AuthManager.instance.isSignedin) {
+            showCreateQuoteDialog();
+          } else {
+            showLoginRequestDialog();
+          }
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  void showLoginRequestDialog() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("Login Required"),
+            content: const Text(
+                "You must be signed in to add a quote.  Would you like to sign in now?"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("Cancel"),
+              ),
+              TextButton(
+                onPressed: () async {
+                  Navigator.of(context).pop();
+
+                  await Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const LoginFrontPage(),
+                    ),
+                  );
+                  setState(() {});
+                },
+                child: const Text("Go to Sign in Page"),
+              ),
+            ],
+          );
+        });
   }
 
   void showCreateQuoteDialog() {
