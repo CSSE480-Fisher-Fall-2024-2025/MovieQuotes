@@ -2,6 +2,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:moviequotes/components/square_button.dart';
+import 'package:moviequotes/managers/auth_manager.dart';
 
 class EmailPasswordAuthPage extends StatefulWidget {
   final bool isNewUser;
@@ -18,11 +19,27 @@ class _EmailPasswordAuthPageState extends State<EmailPasswordAuthPage> {
   final _formKey = GlobalKey<FormState>();
   final emailTextEditingController = TextEditingController();
   final passwordTextEditingController = TextEditingController();
+  UniqueKey? _loginObserverKey;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // TODO: Remove this later
+    emailTextEditingController.text = "a@b.co";
+    passwordTextEditingController.text = "123456";
+
+    _loginObserverKey = AuthManager.instance.addLoginObserver(() {
+      print("Login observed from the EmailPasswordPage");
+      Navigator.of(context).popUntil((route) => route.isFirst);
+    });
+  }
 
   @override
   void dispose() {
     emailTextEditingController.dispose();
     passwordTextEditingController.dispose();
+    AuthManager.instance.removeObserver(_loginObserverKey);
     super.dispose();
   }
 
@@ -83,9 +100,17 @@ class _EmailPasswordAuthPageState extends State<EmailPasswordAuthPage> {
                   onPressCallback: () {
                     if (_formKey.currentState!.validate()) {
                       if (widget.isNewUser) {
-                        print("Create a new account");
+                        AuthManager.instance.signInNewUser(
+                          context: context,
+                          emailAddress: emailTextEditingController.text,
+                          password: passwordTextEditingController.text,
+                        );
                       } else {
-                        print("Log this user back in");
+                        AuthManager.instance.loginExistingUser(
+                          context: context,
+                          emailAddress: emailTextEditingController.text,
+                          password: passwordTextEditingController.text,
+                        );
                       }
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(

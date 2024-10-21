@@ -21,6 +21,8 @@ class MovieQuotesListPage extends StatefulWidget {
 class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
   final quoteTextEditingController = TextEditingController();
   final movieTextEditingController = TextEditingController();
+  UniqueKey? _loginObserverKey;
+  UniqueKey? _logoutObserverKey;
 
   // Not needed if using Firebase UI Firestore
   // StreamSubscription? movieQuotesSubscription;
@@ -28,6 +30,12 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
   @override
   void initState() {
     super.initState();
+    _loginObserverKey = AuthManager.instance.addLoginObserver(() {
+      setState(() {});
+    });
+    _logoutObserverKey = AuthManager.instance.addLogoutObserver(() {
+      setState(() {});
+    });
 
     // Spike test #2 - Pulling data from the cloud
     // FirebaseFirestore.instance
@@ -72,6 +80,8 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
     // Not needed if using Firebase UI Firestore
     // MovieQuotesCollectionManager.instance
     //     .stopListening(movieQuotesSubscription);
+    AuthManager.instance.removeObserver(_loginObserverKey);
+    AuthManager.instance.removeObserver(_logoutObserverKey);
     super.dispose();
   }
 
