@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:moviequotes/components/display_card.dart';
 import 'package:moviequotes/components/movie_quote_form_dialog.dart';
+import 'package:moviequotes/managers/auth_manager.dart';
 import 'package:moviequotes/managers/movie_quote_document_manager.dart';
 import 'package:moviequotes/managers/movie_quotes_collection_manager.dart';
 import 'package:moviequotes/models/movie_quote.dart';
@@ -48,7 +49,10 @@ class _MovieQuoteDetailPageState extends State<MovieQuoteDetailPage> {
   Widget build(BuildContext context) {
     var actions = <Widget>[];
 
-    if (MovieQuoteDocumentManager.instance.latestMovieQuote != null) {
+    if (MovieQuoteDocumentManager.instance.latestMovieQuote != null &&
+        AuthManager.instance.uid.isNotEmpty &&
+        AuthManager.instance.uid ==
+            MovieQuoteDocumentManager.instance.authorUid) {
       actions = <Widget>[
         IconButton(
           onPressed: () {

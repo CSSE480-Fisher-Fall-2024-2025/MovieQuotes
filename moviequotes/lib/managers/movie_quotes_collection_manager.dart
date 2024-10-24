@@ -54,4 +54,7 @@ class MovieQuotesCollectionManager {
                 MovieQuote.from(documentSnapshot),
             toFirestore: (movieQuote, _) => movieQuote.toJsonMap(),
           );
+
+  Query<MovieQuote> get onlyMyMovieQuotesQuery => allMovieQuotesQuery
+      .where(kMovieQuoteAuthorUid, isEqualTo: AuthManager.instance.uid);
 }

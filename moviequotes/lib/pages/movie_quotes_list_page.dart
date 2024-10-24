@@ -23,6 +23,7 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
   final movieTextEditingController = TextEditingController();
   UniqueKey? _loginObserverKey;
   UniqueKey? _logoutObserverKey;
+  bool _isShowingAllQuotes = true;
 
   // Not needed if using Firebase UI Firestore
   // StreamSubscription? movieQuotesSubscription;
@@ -34,7 +35,9 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
       setState(() {});
     });
     _logoutObserverKey = AuthManager.instance.addLogoutObserver(() {
-      setState(() {});
+      setState(() {
+        _isShowingAllQuotes = true;
+      });
     });
 
     // Spike test #2 - Pulling data from the cloud
@@ -112,7 +115,9 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
         actions: actions,
       ),
       body: FirestoreListView(
-        query: MovieQuotesCollectionManager.instance.allMovieQuotesQuery,
+        query: _isShowingAllQuotes
+            ? MovieQuotesCollectionManager.instance.allMovieQuotesQuery
+            : MovieQuotesCollectionManager.instance.onlyMyMovieQuotesQuery,
         itemBuilder: (context, snapshot) {
           final MovieQuote mq = snapshot.data();
           return MovieQuoteRow(
@@ -132,9 +137,15 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
           ? ListPageDrawer(
               showOnlyMineCallback: () {
                 print("TODO: Filter to show only my quotes");
+                setState(() {
+                  _isShowingAllQuotes = false;
+                });
               },
               showAllCallback: () {
                 print("TODO: Remove the filter. Show all quotes");
+                setState(() {
+                  _isShowingAllQuotes = true;
+                });
               },
             )
           : null,
