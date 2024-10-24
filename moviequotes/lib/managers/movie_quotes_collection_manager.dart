@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:moviequotes/managers/auth_manager.dart';
 import 'package:moviequotes/models/movie_quote.dart';
 
 class MovieQuotesCollectionManager {
@@ -36,6 +37,7 @@ class MovieQuotesCollectionManager {
     required String movie,
   }) {
     return _ref.add({
+      kMovieQuoteAuthorUid: AuthManager.instance.uid,
       kMovieQuoteQuote: quote,
       kMovieQuoteMovie: movie,
       kMovieQuoteLastTouched: Timestamp.now(),

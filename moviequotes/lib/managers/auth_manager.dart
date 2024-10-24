@@ -60,8 +60,6 @@ class AuthManager {
     _logoutObservers.remove(key);
   }
 
-  bool get isSignedin => _user != null;
-
   void signInNewUser({
     required BuildContext context,
     required String emailAddress,
@@ -119,4 +117,8 @@ class AuthManager {
   void signOut() {
     FirebaseAuth.instance.signOut();
   }
+
+  bool get isSignedin => _user != null;
+  String get uid => _user?.uid ?? "";
+  String get email => _user?.email ?? "";
 }
