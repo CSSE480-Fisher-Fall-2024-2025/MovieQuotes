@@ -1,3 +1,4 @@
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:moviequotes/components/square_button.dart';
@@ -65,6 +66,30 @@ class _LoginFrontPageState extends State<LoginFrontPage> {
           ElevatedButton(
             onPressed: () {
               print("TODO: Show the Firebase Auth UI");
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => SignInScreen(
+                    providers: [
+                      EmailAuthProvider(),
+                    ],
+                    actions: [
+                      AuthStateChangeAction((context, AuthState state) {
+                        print("Auth State $state");
+                        // if (state is SignedIn) {
+                        //   print("There was a sign in.  Change pages!");
+                        // } else if (state is UserCreated) {
+                        //   print(
+                        //       "Hey a new user just joined.  Might change pages!");
+                        // }
+                        if (state is SignedIn || state is UserCreated) {
+                          Navigator.of(context)
+                              .popUntil((route) => route.isFirst);
+                        }
+                      })
+                    ],
+                  ),
+                ),
+              );
             },
             child: const Text("Or sign in with Google"),
           ),
