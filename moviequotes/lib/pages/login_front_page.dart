@@ -1,4 +1,5 @@
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:moviequotes/components/square_button.dart';
@@ -65,12 +66,16 @@ class _LoginFrontPageState extends State<LoginFrontPage> {
           ),
           ElevatedButton(
             onPressed: () {
+              const googleWebClientId =
+                  "330903872710-lc3ek3oecshmlk6pfb2b5tv07pm02mq0.apps.googleusercontent.com";
+
               print("TODO: Show the Firebase Auth UI");
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => SignInScreen(
                     providers: [
-                      EmailAuthProvider(),
+                      // EmailAuthProvider(),
+                      GoogleProvider(clientId: googleWebClientId),
                     ],
                     actions: [
                       AuthStateChangeAction((context, AuthState state) {

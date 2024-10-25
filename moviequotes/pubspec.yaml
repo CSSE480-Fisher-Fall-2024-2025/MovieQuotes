@@ -43,6 +43,8 @@ dependencies:
   firebase_ui_firestore: ^1.7.0
   email_validator: ^2.1.17
   firebase_ui_auth: ^1.16.0
+  google_sign_in: ^6.2.1
+  firebase_ui_oauth_google: ^1.4.0
 
 dev_dependencies:
   flutter_test:
