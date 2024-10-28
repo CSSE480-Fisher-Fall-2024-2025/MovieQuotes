@@ -10,6 +10,7 @@ import 'package:moviequotes/managers/movie_quotes_collection_manager.dart';
 import 'package:moviequotes/models/movie_quote.dart';
 import 'package:moviequotes/pages/login_front_page.dart';
 import 'package:moviequotes/pages/movie_quote_detail_page.dart';
+import 'package:moviequotes/pages/profile_page.dart';
 
 class MovieQuotesListPage extends StatefulWidget {
   const MovieQuotesListPage({super.key});
@@ -135,14 +136,19 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
       ),
       drawer: AuthManager.instance.isSignedin
           ? ListPageDrawer(
+              editProfileCallback: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ProfilePage(),
+                  ),
+                );
+              },
               showOnlyMineCallback: () {
-                print("TODO: Filter to show only my quotes");
                 setState(() {
                   _isShowingAllQuotes = false;
                 });
               },
               showAllCallback: () {
-                print("TODO: Remove the filter. Show all quotes");
                 setState(() {
                   _isShowingAllQuotes = true;
                 });

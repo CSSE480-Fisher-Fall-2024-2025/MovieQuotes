@@ -5,10 +5,12 @@ import 'package:moviequotes/managers/auth_manager.dart';
 class ListPageDrawer extends StatelessWidget {
   final void Function() showOnlyMineCallback;
   final void Function() showAllCallback;
+  final void Function() editProfileCallback;
 
   const ListPageDrawer({
     required this.showOnlyMineCallback,
     required this.showAllCallback,
+    required this.editProfileCallback,
     super.key,
   });
 
@@ -29,6 +31,14 @@ class ListPageDrawer extends StatelessWidget {
                 fontSize: 28.0,
               ),
             ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.account_box),
+            title: const Text("Edit Profile"),
+            onTap: () {
+              Navigator.of(context).pop();
+              editProfileCallback();
+            },
           ),
           ListTile(
             leading: const Icon(Icons.person),
