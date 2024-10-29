@@ -26,10 +26,10 @@ class _ProfilePageState extends State<ProfilePage> {
         setState(() {
           displayNameTextEditingController.text =
               UserDataDocumentManager.instance.displayName;
-          print(
-              "TODO: Display the name: ${UserDataDocumentManager.instance.displayName}");
-          print(
-              "TODO: Display the image: ${UserDataDocumentManager.instance.imageUrl}");
+          // print(
+          //     "TODO: Display the name: ${UserDataDocumentManager.instance.displayName}");
+          // print(
+          //     "TODO: Display the image: ${UserDataDocumentManager.instance.imageUrl}");
         });
       },
     );
@@ -48,10 +48,49 @@ class _ProfilePageState extends State<ProfilePage> {
         title: const Text("Edit Profile"),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      body: Column(
-        children: [
-          ProfileImage(imageUrl: UserDataDocumentManager.instance.imageUrl),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 30.0,
+            ),
+            ProfileImage(imageUrl: UserDataDocumentManager.instance.imageUrl),
+            const SizedBox(
+              height: 30.0,
+            ),
+            TextFormField(
+              controller: displayNameTextEditingController,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: "Display Name",
+                hintText: "Enter your display name",
+              ),
+            ),
+            const SizedBox(
+              height: 4.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("Cancel"),
+                ),
+                TextButton(
+                  onPressed: () {
+                    print(
+                        "TODO: Actually save the name and most up to date image");
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("Save and Close"),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
