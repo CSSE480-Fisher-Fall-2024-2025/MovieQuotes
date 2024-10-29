@@ -54,4 +54,8 @@ class UserDataDocumentManager {
 
   String get displayName => latestUserData?.displayName ?? "";
   String get imageUrl => latestUserData?.imageUrl ?? "";
+
+  void clearLatest() {
+    latestUserData = null;
+  }
 }

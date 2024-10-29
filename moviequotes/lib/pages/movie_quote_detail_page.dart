@@ -6,6 +6,7 @@ import 'package:moviequotes/components/movie_quote_form_dialog.dart';
 import 'package:moviequotes/managers/auth_manager.dart';
 import 'package:moviequotes/managers/movie_quote_document_manager.dart';
 import 'package:moviequotes/managers/movie_quotes_collection_manager.dart';
+import 'package:moviequotes/managers/user_data_document_manager%20copy.dart';
 import 'package:moviequotes/models/movie_quote.dart';
 
 class MovieQuoteDetailPage extends StatefulWidget {
@@ -26,13 +27,27 @@ class _MovieQuoteDetailPageState extends State<MovieQuoteDetailPage> {
   final quoteTextEditingController = TextEditingController();
   final movieTextEditingController = TextEditingController();
   StreamSubscription? movieQuoteSubscription;
+  StreamSubscription? userDataSubscription;
 
   @override
   void initState() {
     super.initState();
+
+    MovieQuoteDocumentManager.instance.clearLatest();
+    UserDataDocumentManager.instance.clearLatest();
+
     movieQuoteSubscription = MovieQuoteDocumentManager.instance.startListening(
       documentId: widget.documentId,
       observer: () {
+        if (MovieQuoteDocumentManager.instance.authorUid.isNotEmpty) {
+          userDataSubscription =
+              UserDataDocumentManager.instance.startListening(
+            documentId: MovieQuoteDocumentManager.instance.authorUid,
+            observer: () {
+              setState(() {});
+            },
+          );
+        }
         setState(() {});
       },
     );
@@ -42,11 +57,17 @@ class _MovieQuoteDetailPageState extends State<MovieQuoteDetailPage> {
   void dispose() {
     quoteTextEditingController.dispose();
     movieTextEditingController.dispose();
+    MovieQuoteDocumentManager.instance.stopListening(movieQuoteSubscription);
+    UserDataDocumentManager.instance.stopListening(userDataSubscription);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    print(
+        "Display the author information for: ${UserDataDocumentManager.instance.displayName}");
+    print(
+        "and display the picture at ${UserDataDocumentManager.instance.imageUrl}");
     var actions = <Widget>[];
 
     if (MovieQuoteDocumentManager.instance.latestMovieQuote != null &&

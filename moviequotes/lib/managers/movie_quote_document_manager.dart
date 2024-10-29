@@ -56,6 +56,10 @@ class MovieQuoteDocumentManager {
     });
   }
 
+  void clearLatest() {
+    latestMovieQuote = null;
+  }
+
   String get quote => latestMovieQuote?.quote ?? "";
   String get movie => latestMovieQuote?.movie ?? "";
   String get authorUid => latestMovieQuote?.authorUid ?? "";
