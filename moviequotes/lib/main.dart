@@ -4,6 +4,9 @@ import 'package:moviequotes/pages/movie_quotes_list_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
+// Don't click the run button due to https images! Do this instead:
+// flutter run -d chrome --web-renderer html
+// (and then don't forget to hit "r" to reload)
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:moviequotes/components/profile_image.dart';
 import 'package:moviequotes/managers/auth_manager.dart';
 import 'package:moviequotes/managers/user_data_document_manager%20copy.dart';
 
@@ -47,8 +48,10 @@ class _ProfilePageState extends State<ProfilePage> {
         title: const Text("Edit Profile"),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      body: const Center(
-        child: Text("Profile Page"),
+      body: Column(
+        children: [
+          ProfileImage(imageUrl: UserDataDocumentManager.instance.imageUrl),
+        ],
       ),
     );
   }
