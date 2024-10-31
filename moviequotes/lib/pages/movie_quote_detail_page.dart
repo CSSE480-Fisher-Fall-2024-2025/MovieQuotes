@@ -41,6 +41,7 @@ class _MovieQuoteDetailPageState extends State<MovieQuoteDetailPage> {
       documentId: widget.documentId,
       observer: () {
         if (MovieQuoteDocumentManager.instance.authorUid.isNotEmpty) {
+          UserDataDocumentManager.instance.stopListening(userDataSubscription);
           userDataSubscription =
               UserDataDocumentManager.instance.startListening(
             documentId: MovieQuoteDocumentManager.instance.authorUid,
