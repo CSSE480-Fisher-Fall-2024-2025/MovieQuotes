@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_ui_storage/firebase_ui_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:moviequotes/components/profile_image.dart';
@@ -17,6 +18,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final displayNameTextEditingController = TextEditingController();
   StreamSubscription? userDataSubscription;
   final _formKey = GlobalKey<FormState>();
+  String? _updatedImageUrl;
 
   @override
   void initState() {
@@ -58,7 +60,24 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(
                 height: 30.0,
               ),
-              ProfileImage(imageUrl: UserDataDocumentManager.instance.imageUrl),
+              ProfileImage(
+                  imageUrl:
+                      (_updatedImageUrl != null && _updatedImageUrl!.isNotEmpty)
+                          ? _updatedImageUrl
+                          : UserDataDocumentManager.instance.imageUrl),
+              UploadButton(
+                extensions: ["jpg", "png"],
+                mimeTypes: ["image/jpeg", "image/png"],
+                onError: (error, state) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(error.toString()),
+                  ));
+                },
+                onUploadComplete: (ref) async {
+                  _updatedImageUrl = await ref.getDownloadURL();
+                  setState(() {});
+                },
+              ),
               const SizedBox(
                 height: 30.0,
               ),
@@ -91,10 +110,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   TextButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        print(
-                            "TODO: Actually save the name and most up to date image");
                         UserDataDocumentManager.instance.update(
-                            displayName: displayNameTextEditingController.text);
+                            displayName: displayNameTextEditingController.text,
+                            imageUrl: _updatedImageUrl);
                         Navigator.of(context).pop();
                       }
                     },
