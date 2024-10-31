@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:moviequotes/components/author_box.dart';
 import 'package:moviequotes/components/display_card.dart';
 import 'package:moviequotes/components/movie_quote_form_dialog.dart';
 import 'package:moviequotes/managers/auth_manager.dart';
@@ -139,6 +140,11 @@ class _MovieQuoteDetailPageState extends State<MovieQuoteDetailPage> {
               iconData: Icons.movie_filter_outlined,
               // displayText: widget.movieQuote.movie,
               displayText: MovieQuoteDocumentManager.instance.movie,
+            ),
+            const Spacer(),
+            AuthorBox(
+              imageUrl: UserDataDocumentManager.instance.imageUrl,
+              name: UserDataDocumentManager.instance.displayName,
             ),
           ],
         ),
