@@ -16,6 +16,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final displayNameTextEditingController = TextEditingController();
   StreamSubscription? userDataSubscription;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -50,46 +51,59 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 30.0,
-            ),
-            ProfileImage(imageUrl: UserDataDocumentManager.instance.imageUrl),
-            const SizedBox(
-              height: 30.0,
-            ),
-            TextFormField(
-              controller: displayNameTextEditingController,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: "Display Name",
-                hintText: "Enter your display name",
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 30.0,
               ),
-            ),
-            const SizedBox(
-              height: 4.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text("Cancel"),
+              ProfileImage(imageUrl: UserDataDocumentManager.instance.imageUrl),
+              const SizedBox(
+                height: 30.0,
+              ),
+              TextFormField(
+                controller: displayNameTextEditingController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please add a display name";
+                  }
+                  return null; // Everything is ok!
+                },
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: "Display Name",
+                  hintText: "Enter your display name",
                 ),
-                TextButton(
-                  onPressed: () {
-                    print(
-                        "TODO: Actually save the name and most up to date image");
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text("Save and Close"),
-                ),
-              ],
-            )
-          ],
+              ),
+              const SizedBox(
+                height: 4.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("Cancel"),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        print(
+                            "TODO: Actually save the name and most up to date image");
+                        UserDataDocumentManager.instance.update(
+                            displayName: displayNameTextEditingController.text);
+                        Navigator.of(context).pop();
+                      }
+                    },
+                    child: const Text("Save and Close"),
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
