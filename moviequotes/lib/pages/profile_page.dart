@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:moviequotes/components/profile_image.dart';
 import 'package:moviequotes/managers/auth_manager.dart';
-import 'package:moviequotes/managers/user_data_document_manager%20copy.dart';
+import 'package:moviequotes/managers/user_data_document_manager.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

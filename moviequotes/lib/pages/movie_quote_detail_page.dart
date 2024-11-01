@@ -7,7 +7,7 @@ import 'package:moviequotes/components/movie_quote_form_dialog.dart';
 import 'package:moviequotes/managers/auth_manager.dart';
 import 'package:moviequotes/managers/movie_quote_document_manager.dart';
 import 'package:moviequotes/managers/movie_quotes_collection_manager.dart';
-import 'package:moviequotes/managers/user_data_document_manager%20copy.dart';
+import 'package:moviequotes/managers/user_data_document_manager.dart';
 import 'package:moviequotes/models/movie_quote.dart';
 
 class MovieQuoteDetailPage extends StatefulWidget {

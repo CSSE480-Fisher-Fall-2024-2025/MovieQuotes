@@ -7,6 +7,7 @@ import 'package:moviequotes/components/movie_quote_form_dialog.dart';
 import 'package:moviequotes/components/movie_quote_row.dart';
 import 'package:moviequotes/managers/auth_manager.dart';
 import 'package:moviequotes/managers/movie_quotes_collection_manager.dart';
+import 'package:moviequotes/managers/user_data_document_manager.dart';
 import 'package:moviequotes/models/movie_quote.dart';
 import 'package:moviequotes/pages/login_front_page.dart';
 import 'package:moviequotes/pages/movie_quote_detail_page.dart';
@@ -33,6 +34,7 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
   void initState() {
     super.initState();
     _loginObserverKey = AuthManager.instance.addLoginObserver(() {
+      UserDataDocumentManager.instance.maybeAddNewUser();
       setState(() {});
     });
     _logoutObserverKey = AuthManager.instance.addLogoutObserver(() {

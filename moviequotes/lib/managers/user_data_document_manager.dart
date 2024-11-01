@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:moviequotes/managers/auth_manager.dart';
 import 'package:moviequotes/models/user_data.dart';
 
 class UserDataDocumentManager {
@@ -27,6 +28,29 @@ class UserDataDocumentManager {
 
   void stopListening(StreamSubscription? subscription) {
     subscription?.cancel();
+  }
+
+  void maybeAddNewUser() async {
+    // Get the UserData for the current user
+    DocumentSnapshot doc = await _ref.doc(AuthManager.instance.uid).get();
+    if (!doc.exists) {
+      // New user.  Make a UserData for them!
+      createUserDataFromCurrentUser();
+    }
+  }
+
+  void createUserDataFromCurrentUser() {
+    final userDataMap = <String, Object>{};
+    userDataMap[kUserDataCreated] = Timestamp.now();
+    if (AuthManager.instance.hasDisplayName) {
+      userDataMap[kUserDataDisplayName] = AuthManager.instance.displayName;
+    }
+    if (AuthManager.instance.hasPhotoUrl) {
+      userDataMap[kUserDataImageUrl] = AuthManager.instance.photoUrl;
+    }
+    _ref.doc(AuthManager.instance.uid).set(userDataMap).catchError((err) {
+      print("Error making the UserData ${err.toString()}");
+    });
   }
 
   Future<void> update({
