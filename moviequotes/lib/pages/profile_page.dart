@@ -66,8 +66,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           ? _updatedImageUrl
                           : UserDataDocumentManager.instance.imageUrl),
               UploadButton(
-                extensions: ["jpg", "png"],
-                mimeTypes: ["image/jpeg", "image/png"],
+                extensions: const ["jpg", "png"],
+                mimeTypes: const ["image/jpeg", "image/png"],
                 onError: (error, state) {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: Text(error.toString()),

@@ -184,7 +184,7 @@ class _MovieQuotesListPageState extends State<MovieQuotesListPage> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text("Cancel"),
+                child: const Text("Cancel"),
               ),
               TextButton(
                 onPressed: () async {

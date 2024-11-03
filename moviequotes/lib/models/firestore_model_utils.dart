@@ -14,30 +14,35 @@ class FirestoreModelUtils {
 
   static String getStringField(
           DocumentSnapshot documentSnapshot, String fieldName) =>
-      containsField(documentSnapshot, fieldName)
+      containsField(documentSnapshot, fieldName) &&
+              documentSnapshot.get(fieldName) is String
           ? documentSnapshot.get(fieldName)
           : "";
 
   static int getIntField(DocumentSnapshot documentSnapshot, String fieldName) =>
-      containsField(documentSnapshot, fieldName)
+      containsField(documentSnapshot, fieldName) &&
+              documentSnapshot.get(fieldName) is int
           ? documentSnapshot.get(fieldName)
           : 0;
 
   static bool getBoolField(
           DocumentSnapshot documentSnapshot, String fieldName) =>
-      containsField(documentSnapshot, fieldName)
+      containsField(documentSnapshot, fieldName) &&
+              documentSnapshot.get(fieldName) is bool
           ? documentSnapshot.get(fieldName)
           : false;
 
   static DateTime getDateTimeField(
           DocumentSnapshot documentSnapshot, String fieldName) =>
-      containsField(documentSnapshot, fieldName)
+      containsField(documentSnapshot, fieldName) &&
+              documentSnapshot.get(fieldName) is DateTime
           ? documentSnapshot.get(fieldName)?.toDate()
           : DateTime.now();
 
   static Timestamp getTimestampField(
           DocumentSnapshot documentSnapshot, String fieldName) =>
-      containsField(documentSnapshot, fieldName)
+      containsField(documentSnapshot, fieldName) &&
+              documentSnapshot.get(fieldName) is Timestamp
           ? documentSnapshot.get(fieldName)
           : Timestamp.now();
 
